@@ -1,6 +1,6 @@
 //
-//  expense_app.swift
-//  expense-app
+//  ExpenseApp.swift
+//  ExpenseApp
 //
 //  Created by Juan Olivera on 7/4/26.
 //
@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct expense_app: App {
+struct ExpenseApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SignInView()
         }
     }
 }
