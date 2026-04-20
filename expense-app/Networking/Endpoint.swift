@@ -17,7 +17,7 @@ struct Endpoint {
     var body: Encodable?
     var queryItems: [URLQueryItem] = []
 
-    func urlRequest(baseURL: URL) throws -> URLRequest {
+    func urlRequest(baseURL: URL, encoder: JSONEncoder = JSONEncoder()) throws -> URLRequest {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: true)
         if !queryItems.isEmpty { components?.queryItems = queryItems }
 
@@ -29,8 +29,22 @@ struct Endpoint {
         headers.forEach { request.setValue($1, forHTTPHeaderField: $0) }
 
         if let body {
-            request.httpBody = try JSONEncoder().encode(body)
+            request.httpBody = try encoder.encode(body)
         }
         return request
+    }
+}
+
+extension Endpoint {
+    static func login(enrollmentRequest: EnrollmentRequest) -> Endpoint {
+        Endpoint(path: "auth/login",
+                 method: .post,
+                 body: enrollmentRequest.toJson())
+    }
+
+    static func register(enrollmentRequest: EnrollmentRequest) -> Endpoint {
+        Endpoint(path: "auth/register",
+                 method: .post,
+                 body: enrollmentRequest.toJson())
     }
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct ExpenseApp: App {
     var body: some Scene {
         WindowGroup {
-            SignInView()
+            SignInView(enrollmentViewModel: EnrollmentViewModel())
         }
     }
 }

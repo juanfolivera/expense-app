@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  expense-app
+
+  Created by Juan Olivera on 10/4/26.
+  
+*/
+
+"sign_in.title" = "Keep your expenses on point.";
+"sign_in.action" = "Sign In";
+"sign_in.secondary.action" = "I don't have an account";
+
+"sign_up.title" = "Create your account.";
+"sign_up.action" = "Sign Up";
+
+"username.placeholder" = "Username";
+"password.placeholder" = "Password";
+"confirm_password.placeholder" = "Confirm Password";
+
+/// Error Handling
+"error.title" = "Error";
+"error.action" = "OK";
+"error.retry" = "Retry";

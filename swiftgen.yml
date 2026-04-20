@@ -1,0 +1,12 @@
+strings:
+  - inputs: expense-app/Resources/en.lproj/Localizable.strings
+    outputs:
+      - templateName: structured-swift5
+        output: expense-app/Resources/Generated/Strings+Generated.swift
+xcassets:
+  - inputs: expense-app/Resources/Colors.xcassets
+    outputs:
+      - templateName: swift5
+        output: expense-app/Resources/Generated/Colors+Generated.swift
+        params:
+          enumName: ExpenseColors

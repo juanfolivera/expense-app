@@ -21,7 +21,7 @@ enum NetworkError: LocalizedError {
         case .invalidResponse:
             return "Invalid Response"
         case .unauthorized:
-            return "Session expired. Please try again"
+            return "Unauthorized. Please try again"
         case .noConnection:
             return "No internet connection"
         case .httpError(let code, _):

@@ -10,50 +10,80 @@ import SwiftUI
 struct SignInView: View {
     @State private var username: String = ""
     @State private var password: String = ""
+    @State private var path = NavigationPath()
+    @State private var showLoginSheet = true
+    @ObservedObject var enrollmentViewModel: EnrollmentViewModel
 
     var body: some View {
-        ZStack {
-            Color(hex: "#272f32")
-                .ignoresSafeArea()
-            Text("Keep your expenses on point.")
-                .font(.system(size: 42, weight: .bold))
-                .foregroundStyle(Color.white)
-                .padding()
-        }
-        .sheet(isPresented: .constant(true)) {
+        NavigationStack(path: $path) {
             VStack {
-                Form {
-                    TextField("Username", text: $username)
-                    SecureField("Password", text: $password)
+                ZStack {
+                    Color(hex: "#272f32")
+                        .ignoresSafeArea()
+                    Text(L10n.SignIn.title)
+                        .font(.system(size: 42, weight: .bold))
+                        .foregroundStyle(Color.white)
+                        .padding()
                 }
-                Button {
-
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("Sign In")
-                            .font(.system(size: 17, weight: .bold))
-                            .foregroundStyle(Color.white)
-                            .padding()
-                        Spacer()
+                VStack {
+                    Form {
+                        TextField(L10n.Username.placeholder, text: $username)
+                        SecureField(L10n.Password.placeholder, text: $password)
                     }
-                    .background(Color(hex: "#272f32"))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .padding()
-                }
-                Button {
+                    Button {
+                        Task {
+                            enrollmentViewModel.error = nil
+                            await enrollmentViewModel.signIn(username: username.lowercased(),
+                                                             password: password.lowercased())
+                            if enrollmentViewModel.error == nil {
+                                path.append(AppRoute.dashboard)
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text(L10n.SignIn.action)
+                                .font(.system(size: 17, weight: .bold))
+                                .foregroundStyle(Color.white)
+                                .padding()
+                            if enrollmentViewModel.isLoading {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                                    .tint(.white)
+                            }
+                            Spacer()
+                        }
+                        .background(Color(hex: "#272f32"))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding()
+                    }
+                    .disabled(enrollmentViewModel.isLoading)
 
-                } label: {
-                    Text("I don't have an account")
-                        .foregroundStyle(Color(hex: "#272f32"))
+                    Button(L10n.SignIn.Secondary.action) {
+                        showLoginSheet = false
+                        path.append(AppRoute.signUp)
+                    }
+                    .foregroundStyle(Color(hex: "#272f32"))
+                }
+                .background(Color(uiColor: UIColor.groupTableViewBackground))
+                .frame(maxHeight: 300)
+            }
+            .navigationDestination(for: AppRoute.self) { route in
+                switch route {
+                case .signUp:
+                    SignUpView(enrollmentViewModel: enrollmentViewModel)
+                case .dashboard:
+                    DashboardView()
                 }
             }
-            .presentationDetents([.fraction(0.35)])
-            .interactiveDismissDisabled(true)
+            .onAppear {
+                showLoginSheet = true
+            }
+            .networkErrorAlert(error: $enrollmentViewModel.error)
         }
     }
 }
 
 #Preview {
-    SignInView()
+    SignInView(enrollmentViewModel: EnrollmentViewModel())
 }
