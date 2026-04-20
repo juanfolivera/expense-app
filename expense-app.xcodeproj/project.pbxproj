@@ -99,6 +99,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 77E78A7C2F8567C100737026 /* Build configuration list for PBXNativeTarget "expense-app" */;
 			buildPhases = (
+				77E78CF32F8D2AB800737026 /* Run swiftgen */,
 				77E78A572F8567BF00737026 /* Sources */,
 				77E78A582F8567BF00737026 /* Frameworks */,
 				77E78A592F8567BF00737026 /* Resources */,
@@ -106,6 +107,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				77E78B442F86987B00737026 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				77E78A5D2F8567BF00737026 /* expense-app */,
@@ -195,6 +197,10 @@
 			);
 			mainGroup = 77E78A522F8567BF00737026;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				77E78A9C2F86937B00737026 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				77E78CF22F8D2A7300737026 /* XCRemoteSwiftPackageReference "SwiftGenPlugin" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 77E78A5C2F8567BF00737026 /* Products */;
 			projectDirPath = "";
@@ -231,6 +237,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		77E78CF32F8D2AB800737026 /* Run swiftgen */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run swiftgen";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$HOME/.mint/bin:/opt/homebrew/bin:$PATH\"\ncd \"$SRCROOT\"\n\nif which swiftgen > /dev/null; then\n    swiftgen config run\nelse\n    echo \"warning: SwiftGen not installed (Mint or Homebrew)\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		77E78A572F8567BF00737026 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -265,6 +294,10 @@
 			isa = PBXTargetDependency;
 			target = 77E78A5A2F8567BF00737026 /* expense-app */;
 			targetProxy = 77E78A732F8567C100737026 /* PBXContainerItemProxy */;
+		};
+		77E78B442F86987B00737026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 77E78B432F86987B00737026 /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -399,6 +432,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3A84P5KX4X;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -431,6 +465,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3A84P5KX4X;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -578,6 +613,33 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		77E78A9C2F86937B00737026 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.63.2;
+			};
+		};
+		77E78CF22F8D2A7300737026 /* XCRemoteSwiftPackageReference "SwiftGenPlugin" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftGen/SwiftGenPlugin";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.6.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		77E78B432F86987B00737026 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77E78A9C2F86937B00737026 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 77E78A532F8567BF00737026 /* Project object */;
 }
